@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2E2A57EF2F638CEF0038509D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2E2A57EE2F638CEF0038509D /* Alamofire */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		2E2A57B72F638C4D0038509D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E2A57EF2F638CEF0038509D /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +130,7 @@
 			);
 			name = RickAndMortyAPI;
 			packageProductDependencies = (
+				2E2A57EE2F638CEF0038509D /* Alamofire */,
 			);
 			productName = RickAndMortyAPI;
 			productReference = 2E2A579D2F638C4C0038509D /* RickAndMortyAPI.app */;
@@ -208,6 +214,9 @@
 			);
 			mainGroup = 2E2A57942F638C4C0038509D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2E2A57ED2F638CEF0038509D /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2E2A579E2F638C4C0038509D /* Products */;
 			projectDirPath = "";
@@ -591,6 +600,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2E2A57ED2F638CEF0038509D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2E2A57EE2F638CEF0038509D /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E2A57ED2F638CEF0038509D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2E2A57952F638C4C0038509D /* Project object */;
 }
