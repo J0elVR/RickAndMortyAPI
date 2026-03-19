@@ -65,6 +65,10 @@ class FavoritesViewController: UIViewController {
         do {
             favoriteCharacters = try context.fetch(request)
             favoriteTableView.reloadData()
+            
+            if favoriteCharacters.isEmpty {
+                showAlert(title: "Sin favoritos", message: "Podrás ver personajes una vez que agregues favoritos")
+            }
         } catch {
             print("Error al obtener los personajes favorito \(error)")
         }
