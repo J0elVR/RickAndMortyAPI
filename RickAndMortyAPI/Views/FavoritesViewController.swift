@@ -70,12 +70,6 @@ class FavoritesViewController: UIViewController {
         }
     }
     
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
 }
 
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
@@ -104,6 +98,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
                 name: fav.name ?? "",
                 status: fav.status ?? "", 
                 species: fav.species ?? "",
+                gender: fav.gender ?? "",
                 image: fav.image ?? ""
             )
             

@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 import Alamofire
 import CoreData
-
+import Network
 
 class ViewController: UIViewController, UITableViewDelegate {
     
@@ -37,7 +37,18 @@ class ViewController: UIViewController, UITableViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchData()
+        
+        NetworkMonitor.shared.onStatusChange = { [weak self] isConnected in
+            guard let self = self else { return }
+            
+            if isConnected {
+                if self.characters.isEmpty {
+                    self.fetchData()
+                }
+            } else {
+                self.showOfflineAlert()
+            }
+        }
         
         view.addSubview(logoImage)
         view.addSubview(tableView)
@@ -111,6 +122,28 @@ class ViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    func showOfflineAlert() {
+        let retryConectionAction = UIAlertAction(title: "Reintentar conexión", style: .default) { _ in
+            if NetworkMonitor.shared.isConnected {
+                self.fetchData()
+            } else {
+                self.showOfflineAlert()
+            }
+        }
+            
+        let settingsAction = UIAlertAction(title: "Abrir configuración", style: .default) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        }
+        
+        let favoritesSectionAction = UIAlertAction(title: "Ver mis favoritos", style: .default) { _ in
+            self.tabBarController?.selectedIndex = 1
+        }
+        
+        showAlert(title: "Sin conexión", message: "No tienes conexión  internet", action: [retryConectionAction, settingsAction, favoritesSectionAction])
+    }
+    
 }
 
 extension ViewController: UITableViewDataSource {
@@ -170,6 +203,7 @@ extension ViewController: UITableViewDataSource {
                 favorite.image = character.image
                 favorite.species = character.species
                 favorite.status = character.status
+                favorite.gender = character.gender
                 showAlert(title: "Añadido", message: "Se ha añadido \(character.name) a favoritos")
                 print("\(character.name) añadido a favoritos")
             }
@@ -192,14 +226,6 @@ extension ViewController: UITableViewDataSource {
             return false
         }
     }
-    
-    public func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
-    
 }
 
 extension ViewController: UISearchBarDelegate {
@@ -225,5 +251,19 @@ extension ViewController: UISearchBarDelegate {
             fetchData()
         }
         
+    }
+}
+
+extension UIViewController {
+    public func showAlert(title: String, message: String, action: [UIAlertAction] = []) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        if action.isEmpty {
+            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default))
+        } else {
+            action.forEach { alertController.addAction($0) }
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 }

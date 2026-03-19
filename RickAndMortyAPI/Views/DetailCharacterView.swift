@@ -33,6 +33,8 @@ struct DetailCharacterView: View {
                         Divider().background(Color.white.opacity(0.5))
                         DetailRow(icon: "heart.fill", label: "Estado", value: character.status, color: character.status == "Alive" ? .red : .black)
                         DetailRow(icon: "person.fill", label: "Especie", value: character.species, color: .blue)
+                        DetailRow(icon: "person.fill.questionmark", label: "Género", value: character.gender, color: .orange)
+                        
                     }
                     .padding(30)
                     .background(.ultraThinMaterial)
