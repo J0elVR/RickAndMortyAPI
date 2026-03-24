@@ -14,7 +14,7 @@ struct CharacterResponse: Codable {
 }
 
 nonisolated 
-struct RickAndMortyCharacter: Codable{
+struct RickAndMortyCharacter: Codable {
     let id: Int
     let name: String
     let status: String

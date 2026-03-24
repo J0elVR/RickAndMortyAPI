@@ -41,10 +41,8 @@ class ViewController: UIViewController, UITableViewDelegate {
         NetworkMonitor.shared.onStatusChange = { [weak self] isConnected in
             guard let self = self else { return }
             
-            if isConnected {
-                if self.characters.isEmpty {
-                    self.fetchData()
-                }
+            if NetworkMonitor.shared.isConnected {
+                self.fetchData()
             } else {
                 self.showOfflineAlert()
             }
@@ -54,6 +52,7 @@ class ViewController: UIViewController, UITableViewDelegate {
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
+        fetchData()
         
         //SearchBar
         searchController.searchBar.delegate = self
@@ -112,7 +111,6 @@ class ViewController: UIViewController, UITableViewDelegate {
                 switch result {
                 case .success(let response):
                     self?.nextPage = response.info.next
-                    // IMPORTANTE: Sumamos los nuevos a los que ya teníamos
                     self?.characters.append(contentsOf: response.results)
                     self?.tableView.reloadData()
                 case .failure(let error):
@@ -213,6 +211,7 @@ extension ViewController: UITableViewDataSource {
         }
     }
     
+    //Validate the favorite character in the table
     func isFavorite(id: Int) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let context = appDelegate.persistentContainer.viewContext
@@ -245,13 +244,13 @@ extension ViewController: UISearchBarDelegate {
                 }
             }
         }
-        
-        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-            searchBar.text = ""
-            fetchData()
-        }
-        
     }
+        
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        fetchData()
+    }
+        
 }
 
 extension UIViewController {

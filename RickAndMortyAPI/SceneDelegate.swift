@@ -19,20 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
             
-            let charactersVC = ViewController()
-            charactersVC.title = "Personajes"
-            let nav1 = UINavigationController(rootViewController: charactersVC)
-            nav1.tabBarItem = UITabBarItem(title: "Personajes", image: UIImage(systemName: "person.3"), tag: 0)
+            let logInVC = LogIn()
+            let principalNav = UINavigationController(rootViewController: logInVC)
             
-            let favoritesVC = FavoritesViewController()
-            favoritesVC.title = "Favoritos"
-            let nav2 = UINavigationController(rootViewController: favoritesVC)
-            nav2.tabBarItem = UITabBarItem(title: "Favoritos", image: UIImage(systemName: "heart.fill"), tag: 1)
-            
-            let tabBarController = UITabBarController()
-            tabBarController.viewControllers = [nav1, nav2]
-            
-            window.rootViewController = tabBarController
+            window.rootViewController = principalNav
             
             self.window = window
             window.makeKeyAndVisible()
